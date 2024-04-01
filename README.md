@@ -39,3 +39,7 @@ quasar build
 
 ### Customize the configuration
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
+
+
+### Special note
+I wasnt able to utilize sass because i had an issue and i wasn't able to fix it :(

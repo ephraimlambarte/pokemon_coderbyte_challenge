@@ -17,14 +17,13 @@ const $q = useQuasar();
 const pokemon = ref(null);
 const selectedPokemon = ref(null);
 
-
+// methods
 const fetchPokemonDetail = (url) => {
     return api.get(url)
     .then(res => {
         pokemon.value = res.data;
     });
 }
-
 const loadPokemon = () => {
     if (!pokeStore.pokemons.find(p => p.name === pokemonName)) {
         router.push(
@@ -41,7 +40,16 @@ const loadPokemon = () => {
         $q.loading.hide();
     });
 };
+const toggleFavorites = () => {
+    if (isFavorite.value) {
+        const index = pokeStore.favorite_pokemons.findIndex(p => p.name === pokemonName)
+        pokeStore.favorite_pokemons.splice(index, 1);
+    } else {
+        pokeStore.favorite_pokemons.push(pokemon.value);
+    }
+};
 
+//computed
 const pokemonImgUrl = computed(() => {
     if(!pokemon.value) {
         return null;
@@ -56,14 +64,6 @@ const pokeNameDisplay  = computed(() => {
     
     return pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
 });
-const toggleFavorites = () => {
-    if (isFavorite.value) {
-        const index = pokeStore.favorite_pokemons.findIndex(p => p.name === pokemonName)
-        pokeStore.favorite_pokemons.splice(index, 1);
-    } else {
-        pokeStore.favorite_pokemons.push(pokemon.value);
-    }
-};
 const isFavorite = computed(() => {
     return is_favorite(pokemonName);
 });
